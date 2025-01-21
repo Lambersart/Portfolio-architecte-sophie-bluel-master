@@ -99,11 +99,20 @@ document.addEventListener("DOMContentLoaded", () => {
       fetchProjects(categoryId_Number);
     });
     // ajout du bouton
+    /* const boutonTous = "tous";
+    //console.log(boutonTous);
+    const btn1 = document.createElement("button");
+    //console.log(btn1);
+    btn1.innerText = boutonTous;
+    const body = document.querySelector(".boutons");
+    body.appendChild(btn1);*/
+
     /*
+
     buttonsContainer.appendChild(button);
     console.log(button);
   });
-  // 1. Définir les catégories (par exemple un tableau d'objets)
+  // 1. Définir les catégories : un tableau
   const categories = [
     { id: 1, name: "Catégorie 1" },
     { id: 2, name: "Catégorie 2" },
