@@ -10,11 +10,22 @@
       href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
     <meta name="description" content="" />
     <link rel="stylesheet" href="./assets/style.css" />
     <script src="script.js" defer></script>
   </head>
   <body>
+    <!--Mode Edition caché-->
+    <div id="edit-mode-bar" class="edit-mode-bar" style="display: none">
+      <p><i class="fa-regular fa-pen-to-square"></i>Mode Edition</p>
+      <p id="logout">Se déconnecter</p>
+      <p id="error-message" style="color: red; display: none"></p>
+    </div>
     <header>
       <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
       <nav>
@@ -51,17 +62,17 @@
         </article>
       </section>
       <section id="portfolio">
-        <h2 id="projets">Mes Projets</h2>
-        <div class="boutons">
-          <button id="btn1" data-categoryId="0">Tous</button>
-          <button id="cat_1" data-categoryId="1">Objets</button>
-          <button id="cat_2" data-categoryId="2">Appartements</button>
-          <button id="cat_3" data-categoryId="3">Hotels et restaurants</button>
-        </div>
+        <h2 id="projets">
+          Mes Projets
+          <!--bouton pour ouvrir la modale-->
+          <span id="edit-button" class="edit-button" style="display: none"
+            ><i class="fa-regular fa-pen-to-square"></i>
 
-        <!--- <div id="button-container"></div>
-        <div id="result"></div>
-        <div id="filtres"></div>-->
+            modifier</span
+          >
+        </h2>
+
+        <div class="boutons"></div>
         <div id="gallery"></div>
       </section>
       <section id="contact">
@@ -86,5 +97,29 @@
         </ul>
       </nav>
     </footer>
+
+    <!--La modale-->
+    <!--Essai pour le formulaire d'ajout nde photos-->
+    <!-- Ajout du formulaire d'ajout de photo -->
+
+    <!--Fin de l'essai------------------------------->
+
+    <div id="modal" class="modal">
+      <!--contenu-->
+      <div class="modal-content">
+        <h2>Galerie photo</h2>
+        <!--bouton de fémeture-->
+        <button id="close-modal" class="close-button">&times;</button>
+        <!--Galerie miniature-->
+        <div id="thumbnail-gallery" class="thumbnail-gallery">
+          <i class="fa-solid fa-trash"></i>
+          <!--miniatures inséres en JS-->
+        </div>
+        <!--Bouton ajouter-->
+        <button id="add-image-button" class="add-image-button">
+          Ajouter une photo
+        </button>
+      </div>
+    </div>
   </body>
 </html>

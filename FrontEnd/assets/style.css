@@ -212,22 +212,6 @@ li:hover {
 }
 /*--------BOUTONS Catégories-------------------*/
 
-/*#filtres .btnObjets {
-  display: flex;
-  border: solid 1px #1d6154;
-  border-radius: 60px;
-  align-items: center;
-  gap: 15px;
-  height: 20px;
-  padding: 10px 14px;
-  font-size: 16px;
-  font-weight: bold;
-  gap: 15px;
-}*/
-/*#btnOjets :hover {
-  background-color: #1d6154;
-  color: white;
-}*/
 .boutons {
   display: flex;
   justify-content: center;
@@ -324,24 +308,146 @@ button:hover {
 .forgot-password:hover {
   text-decoration: underline;
 }
-
-/* Essais avec async/await---------------------------*/
-/*figure {
-  display: inline-block;
-  margin: 10px;
+/*---Mod EDITION etBouton Modifier----*/
+/*Barre Edition*/
+.edit-mode-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: black;
+  color: white;
   text-align: center;
-}*/
-/*img {
-  width: 305px;
-  height: 407px;
-  border: 1px solid #ccc;
+  padding: 10px 0;
+  font-size: 1.2rem;
+  z-index: 1000;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  width: 100%;
+}
+/*Bouton modifier*/
+.edit-button {
+  font-size: 0.9rem;
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+#logout {
+  cursor: pointer;
+}
+
+/* Styles de la modale-------------------- */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /*z-index: 1000;*/
+}
+/* Contenu de la modale */
+.modal-content {
+  position: relative; /* Nécessaire pour positionner la croix */
+  background-color: white;
   border-radius: 8px;
-}*/
-/*figcaption {
-  margin-top: 5px;
-  font-size: 14px;
+  padding: 20px;
+  width: 80%;
+  max-width: 630px;
+  margin: 23%;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+/*--ESSAIS----Ajouts pour le formulaire--------*/
+
+/*---Fin essai------------*/
+/* Titre de la modale */
+#modal h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* Galerie d'images dans la modale */
+#modal .thumbnail-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+/* Style des images */
+#modal .thumbnail-gallery img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  position: relative;
+}
+/* Bouton pour ajouter une photo */
+#modal .add-photo-button {
+  display: inline-block;
+  background-color: #008080;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-top: 20px;
+}
+
+#modal .add-photo-button:hover {
+  background-color: #005757;
+}
+
+.close-button {
+  position: absolute;
+  top: 1px; /* Ajuste cette valeur selon le padding */
+  right: 5px; /* Ajuste cette valeur selon le padding */
+  background: none;
+  border: none;
+  font-size: 20px;
   color: #333;
-}*/
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+  z-index: 10; /*La croix est au dessus du conteneur*/
+}
+/*AJOUT A TESTER
+
+
+/* Images dans la galerie */
+.thumbnail-gallery img {
+  width: 100%;
+  border-radius: 8px;
+  display: block;
+}
+
+/* Bouton corbeille (icône) */
+.thumbnail-gallery img::after {
+  content: "";
+  position: absolute;
+  top: 8px; /* Ajuste l'espacement en haut */
+  right: 8px; /* Ajuste l'espacement à droite */
+  width: 24px; /* Taille de l'icône */
+  height: 24px;
+  background: url("<i class=fa-solid fa-trash></i>");
+  background-size: contain;
+  z-index: 2; /* Assure que la corbeille est au-dessus de l'image */
+  cursor: pointer;
+  pointer-events: none; /* Permet au clic de passer à l'image */
+}
+.thumbnail-gallery img {
+  position: relative;
+  cursor: pointer;
+}
+/*----Formulaire de la modale pour ajout de photos--------*/
 
 /*Projet    fourni----------Ne pas modifier--------*/
 #contact {
