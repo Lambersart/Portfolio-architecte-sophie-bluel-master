@@ -161,7 +161,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const editButton = document.getElementById("edit-button");
   const closeModal = document.getElementById("close-modal");
   const thumbnailGallery = document.getElementById("thumbnail-gallery");
-  //const addImageButton = document.getElementById("add-image-button");
+  const addImageButton = document.getElementById("add-image-button");
+  //Récup du h2
+  const galleryTitle = document.getElementById("gallery-title");
 
   //ouvrir la modale
   editButton.addEventListener("click", (event) => {
@@ -210,142 +212,169 @@ document.addEventListener("DOMContentLoaded", () => {
       return [];
     }
   }
+  // --- Fonction pour supprimer un projet ---
+  async function deleteProject(imageId) {
+    try {
+      // const token = localStorage.getItem("authToken");
+      console.log("token récupéré:", token);
 
+      const response = await fetch(
+        `http://localhost:5678/api/works/${imageId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error(
+          `Erreur lors de la suppression du projet (statut ${response.status})`
+        );
+      }
+      console.log(`Projet ${imageId} supprimé avec succès`);
+      //Erreur: syntaxe:JSON.parse
+      // return await response.json();
+      //supprimer du DOM
+      const imageElement = document.querySelector(
+        `[data-project-id="${imageId}"]`
+      );
+      if (imageElement) {
+        imageElement.parentElement.remove(); // Supprime le conteneur de l'image
+      }
+    } catch (error) {
+      console.error("Erreur lors de la suppression du projet :", error);
+    }
+  }
+
+  //--Ajout Charger les miniatures
   function loadThumbnails() {
     fetchProjectsThumbnails().then((projects) => {
       thumbnailGallery.innerHTML = ""; // Vider le conteneur des miniatures
       projects.forEach((project) => {
+        const container = document.createElement("div");
+        container.classList.add("thumbnail-container");
+
         const img = document.createElement("img");
         img.src = project.imageUrl;
         img.alt = project.title;
         img.dataset.projectId = project.id;
-        //Ajout d'un évenement de suppression pour chaque miniature
-        img.addEventListener("click", () => {
-          if (confirm("Voulez-vous supprimer cette image ?")) {
-            // Utiliser project.id pour la suppression
+
+        // Création de l'icône de suppression
+        const trashIcon = document.createElement("i");
+        trashIcon.classList.add("fa-solid", "fa-trash", "trash-icon");
+
+        // Ajout de l'événement de suppression
+        trashIcon.addEventListener("click", (event) => {
+          event.stopPropagation(); // Empêche l'event de se propager à l'image
+          if (confirm(`Voulez-vous supprimer l'image "${project.title}" ?`)) {
             deleteProject(project.id).then(() => {
-              loadThumbnails(); // Recharger les miniatures après la suppression
+              loadThumbnails(); // Recharger les miniatures après suppression
             });
           }
         });
-        thumbnailGallery.appendChild(img);
-      });
-      // Ajouter le bouton "Ajouter une photo" à la fin de la galerie
-      const addPhotoButton = document.createElement("button");
-      addPhotoButton.textContent = "Ajouter une photo";
-      addPhotoButton.id = "add-image-button";
-      addPhotoButton.style.marginTop = "20px"; // Pour espacer le bouton
-      addPhotoButton.addEventListener("click", () => {
-        console.log("Bouton 'Ajouter une photo' cliqué !");
-        showAddPhotoForm(); // Appeler la fonction pour afficher
-      });
 
-      thumbnailGallery.appendChild(addPhotoButton);
+        container.appendChild(img);
+        container.appendChild(trashIcon);
+        thumbnailGallery.appendChild(container);
+      });
     });
   }
-  // Fonction pour afficher le formulaire d'ajout de photo
+
+  // Fonction pour afficher le formulaire d'ajout de photo avec bouton HTML
   function showAddPhotoForm() {
-    // Vider le contenu actuel de la modale
-    thumbnailGallery.innerHTML = "";
+    // galleryTitle.style.opacity = "0";
+    // addImageButton.style.opacity = "0";
+    //masque le titre et le formulaire
 
-    // Créer le formulaire
-    const form = document.createElement("form");
-    form.id = "add-photo-form";
+    galleryTitle.style.display = "none";
+    addImageButton.style.display = "none";
+    thumbnailGallery.innerHTML = `
+      <div id="add-photo-form">
+        <button id="back-button" class="back-button">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+       <h2>Ajout photo</h2>
+        <form id="photo-form">
+          <div class="form-group upload-box">
+            <label for="photo-upload" class="upload-label">
+              <i class="fa-solid fa-image"></i>
+            
+              <p>jpg, png : 4mo max</p>
+            </label>
+            <input type="file" id="photo-upload" class="photo-input" accept="image/png, image/jpeg" required />
+          </div>
+          <div class="form-group">
+            <label for="photo-title">Titre</label>
+            <input type="text" id="photo-title" class="form-input" placeholder="Titre de la photo" required />
+          </div>
+          <div class="form-group">
+            <label for="photo-category">Catégorie</label>
+            <select id="photo-category" class="form-input" required>
+              <option value="">Sélectionnez une catégorie</option>
+              <option value="1">Objets</option>
+              <option value="2">Appartements</option>
+              <option value="3">Hotels et restaurants</option>
+            </select>
+          </div>
+          <button type="submit" class="submit-button">Valider</button>
+        </form>
+      </div>
+    `;
 
-    // Ajouter un champ pour le titre de la photo
-    const titleLabel = document.createElement("label");
-    titleLabel.textContent = "Titre :";
-    titleLabel.setAttribute("for", "photo-title");
-    const titleInput = document.createElement("input");
-    titleInput.type = "text";
-    titleInput.id = "photo-title";
-    titleInput.name = "title";
-    titleInput.required = true;
-
-    // Ajouter un champ pour télécharger une image
-    const imageLabel = document.createElement("label");
-    imageLabel.textContent = "Télécharger une image :";
-    imageLabel.setAttribute("for", "photo-file");
-    const imageInput = document.createElement("input");
-    imageInput.type = "file";
-    imageInput.id = "photo-file";
-    imageInput.name = "file";
-    imageInput.accept = "image/*";
-    imageInput.required = true;
-
-    // Ajouter un bouton pour soumettre le formulaire
-    const submitButton = document.createElement("button");
-    submitButton.type = "submit";
-    submitButton.textContent = "Ajouter la photo";
-
-    // Ajouter un bouton pour annuler et revenir aux miniatures
-    const cancelButton = document.createElement("button");
-    cancelButton.type = "button";
-    cancelButton.textContent = "Annuler";
-    cancelButton.style.marginLeft = "10px";
-    cancelButton.addEventListener("click", () => {
-      loadThumbnails(); // Revenir aux miniatures
+    // Gestion du bouton retour
+    document.getElementById("back-button").addEventListener("click", () => {
+      // titre et h2
+      galleryTitle.style.display = "block";
+      addImageButton.style.display = "block";
+      loadThumbnails(); // Recharger les miniatures
     });
 
-    // Ajouter les éléments au formulaire
-    form.appendChild(titleLabel);
-    form.appendChild(titleInput);
-    form.appendChild(imageLabel);
-    form.appendChild(imageInput);
-    form.appendChild(submitButton);
-    form.appendChild(cancelButton);
+    // Gestion du formulaire
+    document
+      .getElementById("photo-form")
+      .addEventListener("submit", (event) => {
+        event.preventDefault(); // Empêche le rechargement de la page
 
-    // Ajouter le formulaire à la modale
-    thumbnailGallery.appendChild(form);
+        // Récupère les données du formulaire
+        const formData = new FormData();
+        const photoInput = document.getElementById("photo-upload");
+        const titleInput = document.getElementById("photo-title");
+        const categoryInput = document.getElementById("photo-category");
 
-    // Gestion de l'envoi du formulaire
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault(); // Empêcher le rechargement de la page
+        formData.append("image", photoInput.files[0]);
+        formData.append("title", titleInput.value);
+        formData.append("category", categoryInput.value);
 
-      // Récupérer les données du formulaire
-      const formData = new FormData();
-      formData.append("title", titleInput.value);
-      formData.append("file", imageInput.files[0]);
+        // Envoie les données à l'API (ajoute ton URL et gère les erreurs)
+        //  const token =
+        //    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczOTM3MTIyNywiZXhwIjoxNzM5NDU3NjI3fQ.-53NSROjP_yrG58sHI480G-BeD0T_wLj2Tp3UbYgIUo"; // Remplace par ton vrai token
+        console.log("token récupéreé!");
 
-      try {
-        // Envoyer une requête POST à l'API
-        const response = await fetch(apiUrl, {
+        fetch("http://localhost:5678/api/works", {
           method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`, // Ajout du token
+          },
           body: formData,
-        });
-
-        if (!response.ok) {
-          throw new Error(`Erreur HTTP : ${response.status}`);
-        }
-
-        console.log("Photo ajoutée avec succès !");
-        loadThumbnails(); // Recharger les miniatures
-      } catch (error) {
-        console.error("Erreur lors de l'ajout de la photo :", error);
-      }
-    });
+        })
+          .then((response) => {
+            if (response.ok) {
+              alert("Photo ajoutée avec succès !");
+              loadThumbnails(); // Recharge la galerie
+            } else {
+              console.log(response);
+              throw new Error("Erreur lors de l'ajout de la photo.");
+            }
+          })
+          .catch((error) => console.error(error));
+      });
   }
-  // ESSAIS de : AJOUTER PHOTO
-  const addPhotoModal = document.getElementById("add-photo-modal");
-  const backToThumbnailsButton = document.getElementById("back-to-thumbnails");
-  const closeAddPhotoModalButton = document.getElementById(
-    "close-add-photo-modal"
-  );
-  const addPhotoButton = document.getElementById("add-image-button");
-  const photoUploadInput = document.getElementById("photo-upload");
-  const photoPreview = document.getElementById("photo-preview");
-  const photoCategorySelect = document.getElementById("photo-category");
-  const addPhotoForm = document.getElementById("add-photo-form");
-
-  // Vérification que le bouton "add-image-button" existe dans le DOM
-  if (addPhotoButton) {
-    // Ouvrir le formulaire d'ajout de photo
-    addPhotoButton.addEventListener("click", () => {
-      addPhotoModal.style.display = "block";
+  // Attacher l'événement au bouton "Ajouter une photo" du HTML
+  if (addImageButton) {
+    addImageButton.addEventListener("click", () => {
+      console.log("Bouton 'Ajouter une photo' cliqué !");
+      showAddPhotoForm();
     });
-  } else {
-    console.error(
-      "Le bouton avec l'ID 'add-image-button' est introuvable dans le DOM."
-    );
   }
 });

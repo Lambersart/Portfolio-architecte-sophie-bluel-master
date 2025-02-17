@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="./assets/style.css" />
     <script src="script.js" defer></script>
   </head>
-  <body>
+  
     <!--Mode Edition caché-->
     <div id="edit-mode-bar" class="edit-mode-bar" style="display: none">
       <p><i class="fa-regular fa-pen-to-square"></i>Mode Edition</p>
@@ -99,27 +99,26 @@
     </footer>
 
     <!--La modale-->
-    <!--Essai pour le formulaire d'ajout nde photos-->
-    <!-- Ajout du formulaire d'ajout de photo -->
-
-    <!--Fin de l'essai------------------------------->
+   
 
     <div id="modal" class="modal">
       <!--contenu-->
       <div class="modal-content">
-        <h2>Galerie photo</h2>
-        <!--bouton de fémeture-->
-        <button id="close-modal" class="close-button">&times;</button>
-        <!--Galerie miniature-->
-        <div id="thumbnail-gallery" class="thumbnail-gallery">
-          <i class="fa-solid fa-trash"></i>
-          <!--miniatures inséres en JS-->
-        </div>
-        <!--Bouton ajouter-->
-        <button id="add-image-button" class="add-image-button">
-          Ajouter une photo
-        </button>
+        <h2 id="gallery-title">Galerie photo</h2>
+      
+      <!--bouton de fémeture-->
+      <button id="close-modal" class="close-button">&times;</button>
+      <!--Galerie miniature-->
+      <div id="thumbnail-gallery" class="thumbnail-gallery">
+        <i class="fa-solid fa-trash"></i>
+        <!--miniatures inséres en JS-->
       </div>
+      <!--Bouton ajouter-->
+      <button id="add-image-button" class="add-image-button">
+        Ajouter une photo
+      </button>
     </div>
-  </body>
+  </div>
+    </body>
+  
 </html>

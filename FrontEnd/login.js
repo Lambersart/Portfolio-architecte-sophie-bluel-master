@@ -77,23 +77,4 @@ document.addEventListener("DOMContentLoaded", () => {
       errorMessage.style.display = "block";
     }
   }
-  // const user = await reponse.json();
-  //getLogIn();
-  /**
-   * Ici le backend nous confirme que untel est connecté
-   * le token c'est une chaine d'information encodée et on veut le stocker dans le localStorage
-   * ensuite on redirige vers la page d'accueil
-   *
-   * -> afficher conditinonellement à la connexion de l'utilisateur les boutons de modifications sur la page d'accueil
-   */
-
-  //console.log(user);
 });
-//Gérer la deconnection
-/* const logOutButton = document.getElementById("logout");
-  logOutButton.addEventListener("click", (event) => {
-    event.preventDefault();
-    console.log("Déconnection de l'utilisateur");
-    localStorage.removeItem("token"); //supprime le token
-    window.location.reload(); //Recharge la page
-  });*/

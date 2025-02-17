@@ -336,118 +336,206 @@ button:hover {
 #logout {
   cursor: pointer;
 }
-
-/* Styles de la modale-------------------- */
-.modal {
+/*--ESSais modale --*/
+/* Styles de la modale------------------------------------- */
+#modal {
   display: none;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /*z-index: 1000;*/
-}
-/* Contenu de la modale */
-.modal-content {
-  position: relative; /* Nécessaire pour positionner la croix */
-  background-color: white;
-  border-radius: 8px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 630px;
+  height: auto;
+  max-width: 800px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   padding: 20px;
-  width: 80%;
-  max-width: 630px;
-  margin: 23%;
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
 }
-/*--ESSAIS----Ajouts pour le formulaire--------*/
 
-/*---Fin essai------------*/
-/* Titre de la modale */
 #modal h2 {
-  font-size: 1.8rem;
+  text-align: center;
   margin-bottom: 20px;
-  font-weight: bold;
 }
 
-/* Galerie d'images dans la modale */
-#modal .thumbnail-gallery {
+/* Fermeture de la modale */
+#close-modal {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Conteneur de la galerie */
+#thumbnail-gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   gap: 15px;
-  margin-bottom: 20px;
+  justify-content: center;
+  margin-top: 25px;
 }
 
-/* Style des images */
-#modal .thumbnail-gallery img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
+/* Conteneur d'image avec corbeille */
+.thumbnail-container {
   position: relative;
-}
-/* Bouton pour ajouter une photo */
-#modal .add-photo-button {
   display: inline-block;
-  background-color: #008080;
-  color: #fff;
+  width: 100%;
+  height: 100%;
+}
+
+.thumbnail-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+/* Icône corbeille */
+.trash-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 14px;
+  background: black;
+  color: white;
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.trash-icon:hover {
+  opacity: 1;
+}
+
+/* Bouton Ajouter une photo */
+.add-photo-btn {
+  display: block;
+  margin: 20px auto;
   padding: 10px 20px;
+  background: #2f594d;
+  color: white;
   border: none;
   border-radius: 25px;
+  font-size: 16px;
   cursor: pointer;
-  font-size: 1rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  margin-top: 20px;
+  transition: background 0.3s ease;
 }
 
-#modal .add-photo-button:hover {
-  background-color: #005757;
+.add-photo-btn:hover {
+  background: #24483a;
+}
+/* --Modale --formulaire ajouter une photo------------------------
+/* Conteneur principal du formulaire */
+#add-photo-form {
+  width: 320px;
 }
 
-.close-button {
+#add-photo-form h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+.thumbnail-gallery,
+#add-photo-form {
+  transition: opacity 0.3s ease-in-out;
+}
+/* Bouton retour */
+.back-button {
   position: absolute;
-  top: 1px; /* Ajuste cette valeur selon le padding */
-  right: 5px; /* Ajuste cette valeur selon le padding */
+  top: 10px;
+  left: 15px;
   background: none;
   border: none;
   font-size: 20px;
-  color: #333;
   cursor: pointer;
-  transition: color 0.2s ease-in-out;
-  z-index: 10; /*La croix est au dessus du conteneur*/
 }
-/*AJOUT A TESTER
 
+/* Formulaire */
+#photo-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
 
-/* Images dans la galerie */
-.thumbnail-gallery img {
+/* Champ d'upload */
+.upload-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  cursor: pointer;
+  color: #777;
+  width: 420px;
+  height: 170px;
+  margin-left: 80px;
+}
+
+.upload-label i {
+  font-size: 50px;
+  color: #aaa;
+}
+
+.photo-input {
+  display: none;
+}
+
+/* Champs texte et sélection */
+.form-group {
   width: 100%;
-  border-radius: 8px;
-  display: block;
+  max-width: 300px;
 }
 
-/* Bouton corbeille (icône) */
-.thumbnail-gallery img::after {
-  content: "";
-  position: absolute;
-  top: 8px; /* Ajuste l'espacement en haut */
-  right: 8px; /* Ajuste l'espacement à droite */
-  width: 24px; /* Taille de l'icône */
-  height: 24px;
-  background: url("<i class=fa-solid fa-trash></i>");
-  background-size: contain;
-  z-index: 2; /* Assure que la corbeille est au-dessus de l'image */
-  cursor: pointer;
-  pointer-events: none; /* Permet au clic de passer à l'image */
+.form-input {
+  width: 440px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  margin-left: 80px;
 }
-.thumbnail-gallery img {
-  position: relative;
+
+.submit-button {
+  background: #2f594d;
+  color: white;
   cursor: pointer;
+  transition: background 0.3s ease;
+  width: 237px;
+  height: 36px;
+  border-radius: 20px;
 }
+
+.submit-button:hover {
+  background: #24483a;
+}
+
+/*--ESSAIS----Ajouts pour le formulaire--------*/
+
+/*---Fin essai------------*/
+
 /*----Formulaire de la modale pour ajout de photos--------*/
+.add-image-button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background: #2f594d;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.add-image-button:hover {
+  background: #24483a;
+}
 
 /*Projet    fourni----------Ne pas modifier--------*/
 #contact {
