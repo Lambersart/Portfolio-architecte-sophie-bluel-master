@@ -86,6 +86,9 @@ document.addEventListener("DOMContentLoaded", () => {
    * Parvenir à connecter ces boutons à notre système de filtrage ✅
    *
    */
+
+  const categoriesArray = [];
+
   async function getCategories() {
     const reponse = await fetch("http://localhost:5678/api/categories");
     const categories = await reponse.json();
@@ -102,6 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
     categories.forEach((category) => {
       const button = document.createElement("button");
 
+      categoriesArray[category.id] = category.name;
       // Ajout du texte et de l'attribut data-categorieId
       button.textContent = category.name;
       button.setAttribute("data-categoryId", category.id);
@@ -129,13 +133,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const editButtons = document.querySelectorAll(".edit-button");
   //verif du token dans le localStorage
   const token = localStorage.getItem("token");
+  const authLink = document.getElementById("authLink");
   if (editModeBar) {
     //verif de l'element sur la page
     if (token) {
       console.log("Mode edition connecté, affichage des boutons");
+      //affiche la barre edition
       editModeBar.style.display = "inline";
       editButtons.forEach((button) => {
         button.style.display = "inline"; //OU block?
+      });
+      // Modification du lien pour afficher "logout"
+      authLink.textContent = "logout";
+      authLink.href = "#";
+      authLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        console.log("Déconnexion via header");
+        localStorage.removeItem("token"); // Supprime le token
+        window.location.reload(); // Recharge la page
       });
     } else {
       console.log("Non connecté!! Pas de boutons!");
@@ -144,16 +159,19 @@ document.addEventListener("DOMContentLoaded", () => {
       editButtons.forEach((button) => {
         button.style.display = "none";
       });
+      // On s'assure que le lien affiche "login"
+      authLink.textContent = "login";
+      authLink.href = "login.html";
     }
   }
   //Gérer la deconnection
-  const logOutButton = document.getElementById("logout");
+  /*const logOutButton = document.getElementById("logout");
   logOutButton.addEventListener("click", (event) => {
     event.preventDefault();
     console.log("Déconnection de l'utilisateur");
     localStorage.removeItem("token"); //supprime le token
     window.location.reload(); //Recharge la page
-  });
+  });*/
 
   //La modale-------------------------------la modale
 
@@ -233,12 +251,11 @@ document.addEventListener("DOMContentLoaded", () => {
         );
       }
       console.log(`Projet ${imageId} supprimé avec succès`);
-      //Erreur: syntaxe:JSON.parse
-      // return await response.json();
       //supprimer du DOM
       const imageElement = document.querySelector(
         `[data-project-id="${imageId}"]`
       );
+
       if (imageElement) {
         imageElement.parentElement.remove(); // Supprime le conteneur de l'image
       }
@@ -289,17 +306,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     galleryTitle.style.display = "none";
     addImageButton.style.display = "none";
+
     thumbnailGallery.innerHTML = `
       <div id="add-photo-form">
         <button id="back-button" class="back-button">
           <i class="fa-solid fa-arrow-left"></i>
         </button>
-       <h2>Ajout photo</h2>
+        <h2>Ajout photo</h2>
         <form id="photo-form">
           <div class="form-group upload-box">
             <label for="photo-upload" class="upload-label">
               <i class="fa-solid fa-image"></i>
-            
               <p>jpg, png : 4mo max</p>
             </label>
             <input type="file" id="photo-upload" class="photo-input" accept="image/png, image/jpeg" required />
@@ -312,9 +329,12 @@ document.addEventListener("DOMContentLoaded", () => {
             <label for="photo-category">Catégorie</label>
             <select id="photo-category" class="form-input" required>
               <option value="">Sélectionnez une catégorie</option>
-              <option value="1">Objets</option>
-              <option value="2">Appartements</option>
-              <option value="3">Hotels et restaurants</option>
+              ${categoriesArray
+                .map(
+                  (category, index) =>
+                    `<option value="${index}">${category}</option>`
+                )
+                .join("")}
             </select>
           </div>
           <button type="submit" class="submit-button">Valider</button>
@@ -359,13 +379,21 @@ document.addEventListener("DOMContentLoaded", () => {
           body: formData,
         })
           .then((response) => {
+            // réponse brute
             if (response.ok) {
-              alert("Photo ajoutée avec succès !");
-              loadThumbnails(); // Recharge la galerie
+              return response.json();
             } else {
               console.log(response);
               throw new Error("Erreur lors de l'ajout de la photo.");
             }
+          })
+          .then((data) => {
+            alert("Photo ajoutée avec succès !");
+
+            galleryTitle.style.display = "block";
+            addImageButton.style.display = "block";
+            loadThumbnails(); // Recharge la galerie
+            fetchProjects();
           })
           .catch((error) => console.error(error));
       });

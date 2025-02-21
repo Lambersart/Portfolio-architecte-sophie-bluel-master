@@ -214,15 +214,22 @@ li:hover {
 
 .boutons {
   display: flex;
+  align-items: center;
   justify-content: center;
-  border: solid 1px #1d6154;
-  color: white;
-  border-radius: 60px;
-  color: #3d3d3d;
+  gap: 2.5rem;
+  margin-bottom: 30px;
+  background-color: #fffef8;
 }
 .boutons :hover {
   background-color: #1d6154;
   color: white;
+}
+.boutons button {
+  border-radius: 60px;
+  padding: 0 15px 0 15px;
+  font-size: 1rem;
+  border: 2px solid #1d6154;
+  background-color: #fffef8;
 }
 #gallery {
   width: 100%;
@@ -500,6 +507,9 @@ button:hover {
   font-size: 16px;
   margin-left: 80px;
 }
+div label {
+  margin-left: 27%;
+}
 
 .submit-button {
   background: #2f594d;
@@ -509,6 +519,7 @@ button:hover {
   width: 237px;
   height: 36px;
   border-radius: 20px;
+  margin-left: 100%;
 }
 
 .submit-button:hover {
@@ -584,4 +595,6 @@ footer nav ul {
   display: flex;
   justify-content: flex-end;
   margin: 2em;
+  height: 50px;
+  background-color: #ffffff;
 }
