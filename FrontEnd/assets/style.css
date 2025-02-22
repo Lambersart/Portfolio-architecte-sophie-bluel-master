@@ -223,6 +223,7 @@ li:hover {
 .boutons :hover {
   background-color: #1d6154;
   color: white;
+  cursor: pointer;
 }
 .boutons button {
   border-radius: 60px;
@@ -230,6 +231,8 @@ li:hover {
   font-size: 1rem;
   border: 2px solid #1d6154;
   background-color: #fffef8;
+  color: #1d6154;
+  height: 35px;
 }
 #gallery {
   width: 100%;
@@ -286,9 +289,7 @@ h2 {
 .login-form input:focus {
   border-color: #7ca08b;
 }
-.footerLogin {
-  margin-top: 250px;
-}
+
 /*button */
 .submit {
   background-color: #305d48;
@@ -305,7 +306,7 @@ h2 {
 button:hover {
   background-color: #28493b;
 }
-*/ .forgot-password {
+.forgot-password {
   text-align: center;
   color: #333333;
   font-size: 14px;
@@ -343,7 +344,7 @@ button:hover {
 #logout {
   cursor: pointer;
 }
-/*--ESSais modale --*/
+
 /* Styles de la modale------------------------------------- */
 #modal {
   display: none;
@@ -526,10 +527,6 @@ div label {
   background: #24483a;
 }
 
-/*--ESSAIS----Ajouts pour le formulaire--------*/
-
-/*---Fin essai------------*/
-
 /*----Formulaire de la modale pour ajout de photos--------*/
 .add-image-button {
   display: block;
@@ -548,7 +545,7 @@ div label {
   background: #24483a;
 }
 
-/*Projet    fourni----------Ne pas modifier--------*/
+/*Projet    fourni------------------*/
 #contact {
   width: 50%;
   margin: auto;
@@ -592,9 +589,24 @@ input[type="submit"] {
 }
 
 footer nav ul {
-  display: flex;
-  justify-content: flex-end;
   margin: 2em;
-  height: 50px;
+}
+footer nav {
+  width: 1440px;
+  display: flex;
+  left: 0px;
+  position: absolute;
   background-color: #ffffff;
+  justify-content: flex-end;
+  height: 50px;
+}
+.footerLogin nav {
+  width: 1440px;
+  display: flex;
+  left: 0px;
+  top: 700px;
+  position: absolute;
+  background-color: #ffffff;
+  justify-content: flex-end;
+  height: 50px;
 }

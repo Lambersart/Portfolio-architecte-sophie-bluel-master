@@ -3,13 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const apiUrl = "http://localhost:5678/api/works";
 
   // Faire en sorte de charger dynamiquement les boutons de catégorie
-  /** Il faut récupérer les catégories à partir de l'API, boucler dessus et créer les boutons pour les
-   * injecter dans le HTML
-   */
-
-  /**
-   * Ensuite avancer sur la page login tuto à suivre : https://openclassrooms.com/fr/courses/7697016-creez-des-pages-web-dynamiques-avec-javascript/7911191-sauvegardez-les-donnees-grace-a-une-api-http
-   */
 
   // Définir l'URL de l'API
   /**  Fonction pour récupérer et afficher les projets depuis l'API
@@ -65,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     } catch (error) {
       // Gérer les erreurs et afficher un message à l'utilisateur
-      console.error("Erreur :", error);
+      console.error("Erreur mot de passe :", error);
       gallery.innerHTML = "<p>Erreur lors du chargement des projets.</p>";
     }
   }
@@ -75,16 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
   /**
    *
    * Générer dynamiquement les boutons de catégorie
-   * Sélection / traitement /insertion
-   *
-   * - Interroger l'API✅
-   * - Parvenir à créer un tableau ✅
-   * - Boucler sur le tableau pour ✅
-   * - Créer nos éléments html pour ✅
-   * - Insérer dans le DOM ✅
-   *
-   * Parvenir à connecter ces boutons à notre système de filtrage ✅
-   *
    */
 
   const categoriesArray = [];
@@ -164,14 +147,6 @@ document.addEventListener("DOMContentLoaded", () => {
       authLink.href = "login.html";
     }
   }
-  //Gérer la deconnection
-  /*const logOutButton = document.getElementById("logout");
-  logOutButton.addEventListener("click", (event) => {
-    event.preventDefault();
-    console.log("Déconnection de l'utilisateur");
-    localStorage.removeItem("token"); //supprime le token
-    window.location.reload(); //Recharge la page
-  });*/
 
   //La modale-------------------------------la modale
 
@@ -201,18 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
       modale.style.display = "none";
     }
   });
-  // Comment on affiche nos photos à l'intérieur ?
-  /**
-   * Récupérer l'élément #gallery et son contenu -> il va falloir le manipuler et le traiter pour afficher les bonnes infos 2/3h
-   * - Ne pas commencer à gérer la suppresion des éléments -
-   * Ajouter le bouton "Ajouter une photo" 30min
-   * Au clic sur le bouton d'ajout de photo -> modifier le contenu de la modal avec un formulaire
-   *
-   * ---
-   * Parvenir à fermer la modal FACILE SOLO
-   * Parvenir à récupérer les données du formulaire MOYEN
-   * Envoyer à l'API DIFFICILE
-   */
+
   //Pour charger les miniatures----fonction dédiée----------
   async function fetchProjectsThumbnails() {
     try {
@@ -285,8 +249,16 @@ document.addEventListener("DOMContentLoaded", () => {
         trashIcon.addEventListener("click", (event) => {
           event.stopPropagation(); // Empêche l'event de se propager à l'image
           if (confirm(`Voulez-vous supprimer l'image "${project.title}" ?`)) {
+            // Supprime immédiatement l'image de la modale
+            const container = event.target.closest(".thumbnail-container");
+            if (container) {
+              container.remove();
+            }
+
             deleteProject(project.id).then(() => {
               loadThumbnails(); // Recharger les miniatures après suppression
+              // Recharge la galerie principale pour mettre à jour l'affichage global
+              fetchProjects();
             });
           }
         });
@@ -300,10 +272,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Fonction pour afficher le formulaire d'ajout de photo avec bouton HTML
   function showAddPhotoForm() {
-    // galleryTitle.style.opacity = "0";
-    // addImageButton.style.opacity = "0";
     //masque le titre et le formulaire
-
     galleryTitle.style.display = "none";
     addImageButton.style.display = "none";
 
@@ -366,7 +335,7 @@ document.addEventListener("DOMContentLoaded", () => {
         formData.append("title", titleInput.value);
         formData.append("category", categoryInput.value);
 
-        // Envoie les données à l'API (ajoute ton URL et gère les erreurs)
+        // Envoie les données à l'API
         //  const token =
         //    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczOTM3MTIyNywiZXhwIjoxNzM5NDU3NjI3fQ.-53NSROjP_yrG58sHI480G-BeD0T_wLj2Tp3UbYgIUo"; // Remplace par ton vrai token
         console.log("token récupéreé!");
