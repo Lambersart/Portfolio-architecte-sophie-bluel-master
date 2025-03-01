@@ -14,6 +14,8 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
+    <link rel="icon" type="image/png" href="./assets/icons/favicon.png" />
+
 
     <meta name="description" content="" />
     <link rel="stylesheet" href="./assets/style.css" />
@@ -23,7 +25,6 @@
     <!--Mode Edition caché-->
     <div id="edit-mode-bar" class="edit-mode-bar" style="display: none">
       <p><i class="fa-regular fa-pen-to-square"></i>Mode Edition</p>
-    <!---- <p id="logout">Logout</p>-->
       <p id="error-message" style="color: red; display: none"></p>
     </div>
     <header>
@@ -66,10 +67,7 @@
           Mes Projets
           <!--bouton pour ouvrir la modale-->
           <span id="edit-button" class="edit-button" style="display: none"
-            ><i class="fa-regular fa-pen-to-square"></i>
-
-            modifier</span
-          >
+            ><i class="fa-regular fa-pen-to-square"></i> modifier</span>
         </h2>
 
         <div class="boutons"></div>
@@ -99,26 +97,11 @@
     </footer>
 
     <!--La modale-->
-   
-
     <div id="modal" class="modal">
       <!--contenu-->
       <div class="modal-content">
-        <h2 id="gallery-title">Galerie photo</h2>
-      
-      <!--bouton de fémeture-->
-      <button id="close-modal" class="close-button">&times;</button>
-      <!--Galerie miniature-->
-      <div id="thumbnail-gallery" class="thumbnail-gallery">
-        <i class="fa-solid fa-trash"></i>
-        <!--miniatures inséres en JS-->
       </div>
-      <!--Bouton ajouter-->
-      <button id="add-image-button" class="add-image-button">
-        Ajouter une photo
-      </button>
     </div>
-  </div>
     </body>
   
 </html>
