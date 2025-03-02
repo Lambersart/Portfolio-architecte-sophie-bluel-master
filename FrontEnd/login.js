@@ -46,9 +46,9 @@ document.addEventListener("DOMContentLoaded", () => {
       email: emailFromForm,
       password: passwordFromForm,
     };
-    // console.log("Email saisi:", emailFromForm);
-    // console.log("mot de passe saisi!", passwordFromForm);
-    // console.log("corps de la requète!!:", requestBody);
+    //console.log("Email saisi:", emailFromForm);
+    //console.log("mot de passe saisi!", passwordFromForm);
+    //console.log("corps de la requète!!:", requestBody);
 
     // 6 - On envoie notre body dans la fonction de connection
     getLogIn(requestBody);

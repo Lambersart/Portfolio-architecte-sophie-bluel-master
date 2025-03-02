@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (editModeBar) {
     //verif de l'element sur la page
     if (token) {
-      console.log("Mode edition connecté, affichage des boutons");
+      // console.log("Mode edition connecté, affichage des boutons");
       //affiche la barre edition
       editModeBar.style.display = "inline";
       editButtons.forEach((button) => {
@@ -395,7 +395,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Attacher l'événement au bouton "Ajouter une photo" du HTML
     if (addImageButton) {
       addImageButton.addEventListener("click", () => {
-        console.log("Bouton 'Ajouter une photo' cliqué !");
         showAddPhotoForm();
       });
     }
