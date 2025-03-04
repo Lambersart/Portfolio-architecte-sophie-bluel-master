@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const emailFromForm = document.querySelector("#email").value.trim();
     const passwordFromForm = document.querySelector("#password").value.trim();
 
-    //  FUSIBLE
+    //  FUSIBLE--booléen--verif des champs
     let fuse = true;
     if (emailFromForm.length < 1) {
       fuse = false;
@@ -46,9 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
       email: emailFromForm,
       password: passwordFromForm,
     };
-    //console.log("Email saisi:", emailFromForm);
-    //console.log("mot de passe saisi!", passwordFromForm);
-    //console.log("corps de la requète!!:", requestBody);
 
     // 6 - On envoie notre body dans la fonction de connection
     getLogIn(requestBody);
@@ -59,10 +56,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
   }
-
+  //appel à l'API seulement si les vérifs sont passées
   async function getLogIn(requestBody) {
     try {
-      console.log("envoi de la requete à l'API");
+      // console.log("envoi de la requete à l'API");
 
       const reponse = await fetch("http://localhost:5678/api/users/login", {
         method: "POST",
@@ -72,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify(requestBody),
       });
 
-      console.log("réponse reçu de l'API:", reponse);
+      // console.log("réponse reçu de l'API:", reponse);
       if (!reponse.ok) {
         throw new Error("Identifiants incorrects");
       }

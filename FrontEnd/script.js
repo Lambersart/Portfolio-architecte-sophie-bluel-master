@@ -205,7 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
     async function deleteProject(imageId) {
       try {
         // token
-        console.log("token récupéré:", token);
+        // console.log("token récupéré:", token);
 
         const response = await fetch(
           `http://localhost:5678/api/works/${imageId}`,
@@ -344,7 +344,13 @@ document.addEventListener("DOMContentLoaded", () => {
           let fuse = true;
           if (photoInput.files.length < 1) {
             fuse = false;
+          } else if (photoInput.files[0].size > 4 * 1024 * 1024) {
+            // Vérifie si la taille du fichier dépasse 4 Mo
+            fuse = false;
+            formMessage.innerText =
+              "La taille du fichier ne doit pas dépasser 4 Mo.";
           }
+
           if (titleInput.value.length < 1) {
             fuse = false;
           }
